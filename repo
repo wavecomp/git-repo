@@ -5,10 +5,11 @@
 import os
 REPO_URL = os.environ.get('REPO_URL', None)
 if not REPO_URL:
-  REPO_URL = 'https://gerrit.googlesource.com/git-repo'
+  REPO_URL = 'ssh://git@github.com:wavecomp/git-repo.git'
 REPO_REV = 'stable'
 
 # Copyright (C) 2008 Google Inc.
+# Copyright (C) 2017 Wave Computing, Inc.  John McGehee
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
