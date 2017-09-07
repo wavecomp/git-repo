@@ -14,6 +14,11 @@
 # limitations under the License.
 
 from __future__ import print_function
+try:
+  from collections import OrderedDict
+except ImportError:
+  # For Python 2.6, you must install the ordereddict package
+  from ordereddict import OrderedDict
 import itertools
 import os
 import re
@@ -402,9 +407,9 @@ class XmlManifest(object):
 
   def _Unload(self):
     self._loaded = False
-    self._projects = {}
-    self._paths = {}
-    self._remotes = {}
+    self._projects = OrderedDict()
+    self._paths = OrderedDict()
+    self._remotes = OrderedDict()
     self._default = None
     self._repo_hooks_project = None
     self._notice = None
