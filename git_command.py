@@ -217,6 +217,7 @@ class GitCommand(object):
         dbg += ' 2>|'
       Trace('%s', dbg)
 
+    print("Executing '{}'".format(' '.join(command)))
     try:
       p = subprocess.Popen(command,
                            cwd = cwd,

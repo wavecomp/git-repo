@@ -1,4 +1,5 @@
 # Copyright (C) 2008 The Android Open Source Project
+# Copyright (C) 2017 Wave Computing, Inc.  John McGehee
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -1117,7 +1118,8 @@ class Project(object):
                       private=False,
                       wip=False,
                       dest_branch=None,
-                      validate_certs=True):
+                      validate_certs=True,
+                      gerrit=True):
     """Uploads the named branch for code review.
     """
     if branch is None:
@@ -1142,12 +1144,18 @@ class Project(object):
       branch.remote.projectname = self.name
       branch.remote.Save()
 
-    url = branch.remote.ReviewUrl(self.UserEmail, validate_certs)
-    if url is None:
-      raise UploadError('review not configured')
+    if gerrit:
+      url = branch.remote.ReviewUrl(self.UserEmail, validate_certs)
+      if url is None:
+        raise UploadError('review not configured')
+    else:
+      url = branch.remote.pushurl
+      if url is None:
+        url = branch.remote.url
+
     cmd = ['push']
 
-    if url.startswith('ssh://'):
+    if gerrit and url.startswith('ssh://'):
       rp = ['gerrit receive-pack']
       for e in people[0]:
         rp.append('--reviewer=%s' % sq(e))
@@ -1163,13 +1171,15 @@ class Project(object):
     upload_type = 'for'
     if draft:
       upload_type = 'drafts'
+    if not gerrit:
+      upload_type = 'heads'
 
     ref_spec = '%s:refs/%s/%s' % (R_HEADS + branch.name, upload_type,
                                   dest_branch)
     if auto_topic:
       ref_spec = ref_spec + '/' + branch.name
 
-    if not url.startswith('ssh://'):
+    if gerrit and not url.startswith('ssh://'):
       rp = ['r=%s' % p for p in people[0]] + \
            ['cc=%s' % p for p in people[1]]
       if private:

@@ -57,6 +57,7 @@ def _SplitEmails(values):
   return result
 
 class Upload(InteractiveCommand):
+  GERRIT = False
   common = True
   helpSummary = "Upload changes for code review"
   helpUsage = """
@@ -393,7 +394,8 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
                                private=opt.private,
                                wip=opt.wip,
                                dest_branch=destination,
-                               validate_certs=opt.validate_certs)
+                               validate_certs=opt.validate_certs,
+                               gerrit=self.GERRIT)
 
         branch.uploaded = True
       except UploadError as e:

@@ -6,7 +6,7 @@ import os
 REPO_URL = os.environ.get('REPO_URL', None)
 if not REPO_URL:
   REPO_URL = 'ssh://git@github.com:wavecomp/git-repo.git'
-REPO_REV = 'stable'
+REPO_REV = 'master'
 
 # Copyright (C) 2008 Google Inc.
 # Copyright (C) 2017 Wave Computing, Inc.  John McGehee
