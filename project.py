@@ -181,7 +181,8 @@ class ReviewableBranch(object):
                       private=False,
                       wip=False,
                       dest_branch=None,
-                      validate_certs=True):
+                      validate_certs=True,
+                      gerrit=True):
     self.project.UploadForReview(self.name,
                                  people,
                                  auto_topic=auto_topic,
@@ -189,7 +190,8 @@ class ReviewableBranch(object):
                                  private=private,
                                  wip=wip,
                                  dest_branch=dest_branch,
-                                 validate_certs=validate_certs)
+                                 validate_certs=validate_certs,
+                                 gerrit=gerrit)
 
   def GetPublishedRefs(self):
     refs = {}
