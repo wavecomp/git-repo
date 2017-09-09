@@ -1135,6 +1135,8 @@ class Project(object):
     if not branch.remote.review:
       raise GitError('remote %s has no review url' % branch.remote.name)
 
+    # TODO: The destination branch is calculated here, and also twice
+    #       in upload.py.  This is not DRY.
     if dest_branch is None:
       dest_branch = self.dest_branch
     if dest_branch is None:
@@ -1151,7 +1153,7 @@ class Project(object):
       if url is None:
         raise UploadError('review not configured')
     else:
-      url = branch.remote.pushurl
+      url = branch.remote.pushUrl
       if url is None:
         url = branch.remote.url
 

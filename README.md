@@ -1,4 +1,4 @@
-WARNING: Under construction.  Not all of the bold strokes claimed here have actually been implemented.  Having said that, we are very keen to get this implemented, so stay tuned.
+STATUS: This seems to be basically functionally complete--sort of alpha quality.  Unfinished tasks are the help string and command options for `repo push`.
 
 Repo is a repository management tool that Google built on top of Git. This same project goes by two names: git-repo and tools_repo.
 
@@ -40,7 +40,7 @@ This procedure comes to us from the [esrlabs/git-repo project](https://github.co
 For resyncing with the official google repo git, here are the commands for resyncing with the tag v1.12.33 of the official google repo:
 
     # add google git-repo remote with tag
-    git remote add googlesource https://android.googlesource.com/tools/repo/  # Check URL!
+    git remote add googlesource https://gerrit.googlesource.com/git-repo/
     git checkout v1.12.33 -b google-latest
 
     # checkout basis for resync

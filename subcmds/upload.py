@@ -207,7 +207,13 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
       date = branch.date
       commit_list = branch.commits
 
-      destination = opt.dest_branch or project.dest_branch or project.revisionExpr
+      # TODO: The destination branch name is calculated twice in this file
+      #       and again in project.py.  This is not DRY.  Further, the
+      #       calculations are different.  The value calculated here is merely
+      #       used in a message.  The project.py value is actually used in a
+      #       git command and is therefore probably more reliable.
+      push_branch = None if self.GERRIT else name
+      destination = opt.dest_branch or push_branch or project.dest_branch or project.revisionExpr
       print('Upload project %s/ to remote branch %s%s:' %
             (project.relpath, destination, ' (draft)' if opt.draft else ''))
       print('  branch %s (%2d commit%s, %s):' % (
@@ -251,7 +257,13 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
 
         if b:
           script.append('#')
-        destination = opt.dest_branch or project.dest_branch or project.revisionExpr
+        # TODO: The destination branch name is calculated twice in this file
+        #       and again in project.py.  This is not DRY.  Further, the
+        #       calculations are different.  The value calculated here is merely
+        #       used in a message.  The project.py value is actually used in a
+        #       git command and is therefore probably more reliable.
+        push_branch = None if self.GERRIT else name
+        destination = opt.dest_branch or push_branch or project.dest_branch or project.revisionExpr
         script.append('#  branch %s (%2d commit%s, %s) to remote branch %s:' % (
                       name,
                       len(commit_list),
