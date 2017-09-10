@@ -5,8 +5,8 @@
 import os
 REPO_URL = os.environ.get('REPO_URL', None)
 if not REPO_URL:
-  REPO_URL = 'ssh://git@github.com:wavecomp/git-repo.git'
-REPO_REV = 'master'
+  REPO_URL = 'https://github.com:wavecomp/git-repo'
+REPO_REV = 'stable'
 
 # Copyright (C) 2008 Google Inc.
 # Copyright (C) 2017 Wave Computing, Inc.  John McGehee
@@ -24,7 +24,7 @@ REPO_REV = 'master'
 # limitations under the License.
 
 # increment this whenever we make important changes to this script
-VERSION = (1, 24)
+VERSION = (1, 25)
 
 # increment this if the MAINTAINER_KEYS block is modified
 KEYRING_VERSION = (1, 2)
