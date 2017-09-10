@@ -1,6 +1,6 @@
-STATUS: This seems to be basically functionally complete--sort of alpha quality.  Unfinished tasks are the help string and command options for `repo push`.
+STATUS: This seems to be functionally complete--alpha quality.
 
-Repo is a repository management tool that Google built on top of Git. This same project goes by two names: git-repo and tools_repo.
+Repo is a repository management tool that Google built on top of Git. This fork provides a new `repo push` command. 
 
 As part of the [Android development environment](https://source.android.com/source/developing), Repo unifies the many Git repositories when necessary, does the uploads to the [revision control system](https://android-review.googlesource.com/), and automates parts of the Android development workflow. Repo is not meant to replace Git, only to make it easier to work with Git in the context of Android. The repo command is an executable Python script that you can put anywhere in your path. In working with the Android source files, you will use Repo for across-network operations. For example, with a single repo command you can download files from multiple repositories into your local working directory.
 
@@ -31,11 +31,11 @@ repo has a long history that makes it difficult to discover the canonical reposi
 
 This repository is a fork of Google's https://gerrit.googlesource.com/git-repo/.  It appears that the same code is also served as https://android.googlesource.com/tools/repo/.  These two repository names have given rise to duplicate project names "git-repo" and "tools_repo" ("tools/repo" with '/' replaced with '_').
 
-Due to the [shutdown of Google Code](http://google-opensource.blogspot.com/2015/03/farewell-to-google-code.html0), the original Google Code repo project https://code.google.com/p/git-repo/ is now archived and out of date.
+Due to the [shutdown of Google Code](http://google-opensource.blogspot.com/2015/03/farewell-to-google-code.html0), the original Google Code repo project https://code.google.com/p/git-repo/ has been archived for quite a while now, and is out of date.
 
 ## Resyncing with official google repo
 
-This procedure comes to us from the [esrlabs/git-repo project](https://github.com/esrlabs/git-repo).
+This procedure comes to us from the [esrlabs/git-repo](https://github.com/esrlabs/git-repo) project.
 
 For resyncing with the official google repo git, here are the commands for resyncing with the tag v1.12.33 of the official google repo:
 
@@ -67,7 +67,7 @@ Commands for creating a new version of repo:
     git push origin stable:stable
     git push origin v0.4.16
 
-* replace `KEYID` (something like 0x..)
-* the `v0.4.16` (two times)
-* replace `COMMENT` with something more explaining
+* Replace `KEYID` (something like 0x..)
+* Replace `v0.4.16` (two times)
+* Replace `COMMENT` with something more illuminating
 
