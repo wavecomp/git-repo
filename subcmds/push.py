@@ -16,7 +16,7 @@
 
 from __future__ import print_function
 import copy
-from optparse import SUPRESS_HELP
+from optparse import SUPPRESS_HELP
 import re
 import sys
 
