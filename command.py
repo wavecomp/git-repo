@@ -194,10 +194,7 @@ class Command(object):
             raise InvalidProjectGroupsError(arg)
 
         result.extend(projects)
-
-    def _getpath(x):
-      return x.relpath
-    result.sort(key=_getpath)
+    # Do not sort; maintain the <project> order from the manifest file.
     return result
 
   def FindProjects(self, args, inverse=False):
