@@ -38,7 +38,7 @@ else:
 UNUSUAL_COMMIT_THRESHOLD = 5
 
 class Push(Upload):
-  GERRIT = False
+  gerrit = False
   common = True
   helpSummary = "Push changes to remote"
   helpUsage = """
@@ -61,39 +61,12 @@ absolute path to the project's local directory. If no projects are specified,
 """
 
   def _Options(self, p):
-    # TODO: Eliminate the unused options that control Gerrit.  Since the
-    #       variables they define are still used in upload.py and project.py,
-    #       for now their --help output has merely been suppressed.
-    p.add_option('-t',
-                 dest='auto_topic', action='store_true',
-                 help=SUPPRESS_HELP)
-                 # 'Send local branch name to Gerrit Code Review'
-    p.add_option('--re', '--reviewers',
-                 type='string',  action='append', dest='reviewers',
-                 help=SUPPRESS_HELP)
-                 # 'Request reviews from these people.'
-    p.add_option('--cc',
-                 type='string',  action='append', dest='cc',
-                 help=SUPPRESS_HELP)
-                 # 'Also send email to these email addresses.'
     p.add_option('--br',
                  type='string',  action='store', dest='branch',
                  help='Branch to push.')
     p.add_option('--cbr', '--current-branch',
                  dest='current_branch', action='store_true',
                  help='Push the current git branch.')
-    p.add_option('-d', '--draft',
-                 action='store_true', dest='draft', default=False,
-                 help=SUPPRESS_HELP)
-                 # 'If specified, upload as a draft.'
-    p.add_option('-p', '--private',
-                 action='store_true', dest='private', default=False,
-                 help=SUPPRESS_HELP)
-                 # 'If specified, upload as a private change.'
-    p.add_option('-w', '--wip',
-                 action='store_true', dest='wip', default=False,
-                 help=SUPPRESS_HELP)
-                 # 'If specified, upload as a work-in-progress change.')
     p.add_option('-D', '--destination', '--dest',
                  type='string', action='store', dest='dest_branch',
                  metavar='BRANCH',

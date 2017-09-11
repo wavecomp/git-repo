@@ -57,7 +57,7 @@ def _SplitEmails(values):
   return result
 
 class Upload(InteractiveCommand):
-  GERRIT = False
+  gerrit = True
   common = True
   helpSummary = "Upload changes for code review"
   helpUsage = """
@@ -212,10 +212,10 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
       #       calculations are different.  The value calculated here is merely
       #       used in a message.  The project.py value is actually used in a
       #       git command and is therefore probably more reliable.
-      push_branch = None if self.GERRIT else name
+      push_branch = None if self.gerrit else name
       destination = opt.dest_branch or push_branch or project.dest_branch or project.revisionExpr
       print('Upload project %s/ to remote branch %s%s:' %
-            (project.relpath, destination, ' (draft)' if opt.draft else ''))
+            (project.relpath, destination, ' (draft)' if self.gerrit and opt.draft else ''))
       print('  branch %s (%2d commit%s, %s):' % (
                     name,
                     len(commit_list),
@@ -262,7 +262,7 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
         #       calculations are different.  The value calculated here is merely
         #       used in a message.  The project.py value is actually used in a
         #       git command and is therefore probably more reliable.
-        push_branch = None if self.GERRIT else name
+        push_branch = None if self.gerrit else name
         destination = opt.dest_branch or push_branch or project.dest_branch or project.revisionExpr
         script.append('#  branch %s (%2d commit%s, %s) to remote branch %s:' % (
                       name,
@@ -381,7 +381,7 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
               continue
 
         # Check if topic branches should be sent to the server during upload
-        if opt.auto_topic is not True:
+        if self.gerrit and opt.auto_topic is not True:
           key = 'review.%s.uploadtopic' % branch.project.remote.review
           opt.auto_topic = branch.project.config.GetBoolean(key)
 
@@ -400,14 +400,17 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
             branch.uploaded = False
             continue
 
-        branch.UploadForReview(people,
-                               auto_topic=opt.auto_topic,
-                               draft=opt.draft,
-                               private=opt.private,
-                               wip=opt.wip,
-                               dest_branch=destination,
-                               validate_certs=opt.validate_certs,
-                               gerrit=self.GERRIT)
+        if self.gerrit:
+          branch.UploadForReview(people,
+                                 auto_topic=opt.auto_topic,
+                                 draft=opt.draft,
+                                 private=opt.private,
+                                 wip=opt.wip,
+                                 dest_branch=destination,
+                                 validate_certs=opt.validate_certs)
+        else:
+          branch.Push(dest_branch=destination,
+                      validate_certs=opt.validate_certs)
 
         branch.uploaded = True
       except UploadError as e:
@@ -503,9 +506,9 @@ Gerrit Code Review:  http://code.google.com/p/gerrit/
         print("ERROR: %s" % str(e), file=sys.stderr)
         return
 
-    if opt.reviewers:
+    if self.gerrit and opt.reviewers:
       reviewers = _SplitEmails(opt.reviewers)
-    if opt.cc:
+    if self.gerrit and opt.cc:
       cc = _SplitEmails(opt.cc)
     people = (reviewers, cc)
 
